@@ -105,7 +105,7 @@ backend:
     - name: RUDDER_TMPDIR
       value: "/data/rudderstack"
     - name: JOBS_BACKUP_STORAGE_PROVIDER
-      value: "S3"  # object storage provider to store backups eg. S3, GCS, AZURE_BLOB, MINIO
+      value: "GCS"  # object storage provider to store backups eg. S3, GCS, AZURE_BLOB, MINIO
     - name: JOBS_BACKUP_BUCKET
       value: "Add your bucket name to store backups of incoming events"
     - name: JOB_STATUS_BACKUP_BUCKET
@@ -145,30 +145,6 @@ serviceAccount:
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template.
   name: ""
-
-postgresql:
-  nameOverride: "rudderstack-postgresql"
-  postgresqlUsername: rudder
-  postgresqlPassword: password
-  postgresqlDatabase: jobsdb
-  postgresqlRunAsUser: 70
-  imagePullPolicy: IfNotPresent
-  image:
-    repository: postgres
-    tag: "11-alpine"
-    pullPolicy: IfNotPresent
-  persistence:
-    size: 100Gi
-  replication:
-    enabled: false
-  service:
-    type: "ClusterIP"
-    port: 5432
-  resources:
-    requests:
-      memory: 2048Mi
-    limits:
-      memory: 4096Mi
 
 telegraf_sidecar:
   enabled: true
